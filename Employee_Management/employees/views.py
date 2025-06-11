@@ -4,6 +4,32 @@ from django.urls import reverse_lazy
 from .models import Employee
 from .forms import EmployeeForm
 
+#admin profile view
+from django.contrib.auth.decorators import login_required, user_passes_test
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def admin_profile(request):
+    return render(request, 'employees/admin_profile.html')
+#homepage
+
+from django.shortcuts import render
+
+def homepage(request):
+    return render(request, 'employees/homepage.html')
+
+def about(request):
+    return render(request, 'employees/about.html')
+
+def events(request):
+    return render(request, 'employees/events.html')
+
+def employee_portal(request):
+    return render(request, 'employees/employee_portal.html')
+
+def contact(request):
+    return render(request, 'employees/contact.html')
+
+
 class EmployeeListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Employee
     template_name = 'employees/employee_list.html'  # fixed path
